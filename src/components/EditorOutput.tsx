@@ -2,10 +2,16 @@
 import { FC } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import React from "react";
 
 interface OutPutProps {
   data: any;
-  style: typeof style;
+  style: {
+    paragraph: {
+      fontSize: string;
+      lineHeight: string;
+    };
+  };
   className: string;
   renderers: {
     image: ({ data }: any) => JSX.Element;

@@ -23,16 +23,22 @@ const SignInForm = () => {
   } = useForm<SignInType>({
     resolver: zodResolver(SignInValidator),
   });
-
-  const handleSignIn = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLogin = async (e: SignInType) => {
     setIsLoading(true);
     try {
-      await signIn("github", { callbackUrl: "/" });
+      const result = await signIn("credentials", {
+        Email: e.email,
+        Password: e.password,
+        redirect: false,
+      });
+      if (!result?.ok) {
+        throw new Error("Invalid login credentials");
+      }
+      window.location.replace("/"); // Redirect to homepage on successful login
     } catch (error) {
       toast({
         title: "There was a problem",
-        description: "There was an error logging in with GitHub",
+        description: "There was an error logging in with credentials",
         variant: "destructive",
       });
     } finally {
@@ -41,7 +47,11 @@ const SignInForm = () => {
   };
 
   return (
-    <form onSubmit={handleSignIn}>
+    <form
+      onSubmit={handleSubmit((e) => {
+        handleLogin(e);
+      })}
+    >
       <Card className="mx-auto max-w-sm">
         <CardContent>
           <div className="space-y-4">
@@ -78,9 +88,6 @@ const SignInForm = () => {
             <Button isLoading={isLoading} type="submit" className="w-full">
               Sign in
             </Button>
-            <button type="submit" className="mt-4 w-full">
-              Sign In with GitHub
-            </button>
           </div>
         </CardContent>
       </Card>
