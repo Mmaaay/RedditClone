@@ -11,27 +11,34 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const SignInForm = ({}) => {
+const SignInForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm<SignInType>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInType>({
     resolver: zodResolver(SignInValidator),
   });
   const handleLogin = async (e: SignInType) => {
     setIsLoading(true);
     try {
-      await signIn("credentials", {
+      const result = await signIn("credentials", {
         Email: e.email,
         Password: e.password,
         redirect: false,
       });
-      window.location.replace("/");
+      if (!result?.ok) {
+        throw new Error("Invalid login credentials");
+      }
+      window.location.replace("/"); // Redirect to homepage on successful login
     } catch (error) {
       toast({
         title: "There was a problem",
-        description: "There was an error logging in with google",
+        description: "There was an error logging in with credentials",
         variant: "destructive",
       });
     } finally {
@@ -57,6 +64,9 @@ const SignInForm = ({}) => {
                 {...register("email")}
                 required
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -68,6 +78,11 @@ const SignInForm = ({}) => {
                 {...register("password")}
                 required
               />
+              {errors.password && (
+                <p className="text-red-500 text-sm">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <Button isLoading={isLoading} type="submit" className="w-full">

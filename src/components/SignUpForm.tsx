@@ -81,6 +81,9 @@ const SignUpForm: FC<SignUpFormProps> = ({}) => {
                 {...register("email")}
                 required
               />
+              {errors.email && (
+                <p className="text-red-500 text-xs">{errors.email.message}</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
@@ -91,6 +94,11 @@ const SignUpForm: FC<SignUpFormProps> = ({}) => {
                 {...register("userName")}
                 required
               />
+              {errors.userName && (
+                <p className="text-red-500 text-xs">
+                  {errors.userName.message}
+                </p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
@@ -101,6 +109,11 @@ const SignUpForm: FC<SignUpFormProps> = ({}) => {
                 {...register("password")}
                 required
               />
+              {errors.password && (
+                <p className="text-red-500 text-xs">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">Confirm Your Password</Label>
@@ -111,6 +124,11 @@ const SignUpForm: FC<SignUpFormProps> = ({}) => {
                 {...register("confirmPassword")}
                 required
               />
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-xs">
+                  {errors.confirmPassword.message}
+                </p>
+              )}
             </div>
 
             <Button isLoading={isLoading} type="submit" className="w-full">

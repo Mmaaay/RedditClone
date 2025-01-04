@@ -1,8 +1,7 @@
-import bcrypt from "bcryptjs";
-import { PrismaClient } from "@prisma/client";
 import { db } from "@/lib/db";
-import { z } from "zod";
+import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
+import { z } from "zod";
 
 export async function POST(req: Request) {
   const { email, userName, password, confirmPassword } = await req.json();

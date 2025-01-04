@@ -1,11 +1,21 @@
 import { z } from "zod";
 
-export const AccountValidator = z.object({
-  email: z.string().email(),
-  userName: z.string().min(3).max(10),
-  password: z.string().min(8).max(100),
-  confirmPassword: z.string(),
-});
+export const AccountValidator = z
+  .object({
+    email: z.string().email(),
+    userName: z.string().min(3).max(10),
+    password: z.string().min(8).max(100),
+    confirmPassword: z.string().min(8).max(100),
+  })
+  .superRefine(({ confirmPassword, password }, ctx) => {
+    if (confirmPassword !== password) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Passwords do not match",
+        path: ["confirmPassword"],
+      });
+    }
+  });
 
 export type AccountType = z.infer<typeof AccountValidator>;
 

@@ -53,7 +53,7 @@ const CreateComment: FC<CreateCommentProps> = ({ postId, replytoId }) => {
   });
 
   return (
-    <div className="grid w-full gap-1.5">
+    <div className="gap-1.5 grid w-full">
       <Label htmlFor="comment" className="text-sm">
         Comment
       </Label>
@@ -65,7 +65,7 @@ const CreateComment: FC<CreateCommentProps> = ({ postId, replytoId }) => {
           placeholder="What do you think"
         />
 
-        <div className="mt-2 flex justify-end">
+        <div className="flex justify-end mt-2">
           <Button
             onClick={() => comment({ postId, text: Input, replytoId })}
             disabled={Input.length === 0}

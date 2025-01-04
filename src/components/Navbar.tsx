@@ -9,11 +9,11 @@ export const Navbar = async () => {
   const session = await getAuthSession();
 
   return (
-    <div className="fixed top-0 inset-x-0 h-fit bg-zinc-100 border-b border-zinc-300 z-[10] py-2">
-      <div className="container max-w-7xl h-full mx-auto flex items-center justify-between gap-2">
-        <Link href="/" className="flex gap-2 items-center">
-          <Icons.logo className="w-8 h-8 sm:h-6 sm:w-6 text-zinc-700" />
-          <p className="hidden text-zinc-700 text-sm font-medium md:block">
+    <div className="top-0 z-[10] fixed inset-x-0 border-zinc-300 bg-zinc-100 py-2 border-b h-fit">
+      <div className="flex justify-between items-center gap-2 mx-auto max-w-7xl h-full container">
+        <Link href="/" className="flex items-center gap-2">
+          <Icons.logo className="w-8 sm:w-6 h-8 sm:h-6 text-zinc-700" />
+          <p className="md:block hidden font-medium text-sm text-zinc-700">
             BreadIt
           </p>
         </Link>
@@ -22,9 +22,17 @@ export const Navbar = async () => {
         {session?.user ? (
           <UserAccountNav user={session.user} />
         ) : (
-          <Link href="/sign-in" className={buttonVariants()}>
-            Sign In
-          </Link>
+          <div className="space-x-2">
+            <Link href="/sign-in" className={buttonVariants()}>
+              Sign In
+            </Link>
+            <Link
+              href="/sign-up"
+              className={buttonVariants({ variant: "subtle" })}
+            >
+              Sign Up
+            </Link>
+          </div>
         )}
       </div>
     </div>

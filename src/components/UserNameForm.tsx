@@ -43,7 +43,7 @@ const UserNameForm: FC<UserNameFormProps> = ({ user }) => {
       const { data } = await axios.patch(`/api/username`, payload);
       return data;
     },
-    onError: (err) => {
+    onError: (err: any) => {
       if (err instanceof AxiosError) {
         if (err.response?.status === 409) {
           return toast({
@@ -80,8 +80,8 @@ const UserNameForm: FC<UserNameFormProps> = ({ user }) => {
           <CardDescription>Place enter a display name you like</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="relative grid gap-1">
-            <div className="absolute top-0 left-0 w-8 h-10 grid place-items-center">
+          <div className="relative gap-1 grid">
+            <div className="top-0 left-0 absolute place-items-center grid w-8 h-10">
               <span className="text-sm text-zinc-400">u/ </span>
             </div>
             <Label className="sr-only" htmlFor="name">
@@ -89,13 +89,13 @@ const UserNameForm: FC<UserNameFormProps> = ({ user }) => {
             </Label>
             <Input
               id="name"
-              className="w-[400px] pl-6"
+              className="pl-6 w-[400px]"
               size={32}
               {...register("name")}
             />
 
             {errors.name && (
-              <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
+              <p className="px-1 text-red-600 text-xs">{errors.name.message}</p>
             )}
           </div>
         </CardContent>

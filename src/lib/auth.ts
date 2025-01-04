@@ -26,15 +26,22 @@ export const authOptions: NextAuthOptions = {
         Password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        if (!credentials) {
+          return null;
+        }
         const user = await db.user.findFirst({
           where: {
             email: credentials?.Email,
           },
         });
+        if (!user) {
+          return null;
+        }
+        console.log(user);
         if (
-          user &&
-          //@ts-expect-error
-          bcrypt.compareSync(credentials?.Password, user.hashedPassword)
+          user.hashedPassword &&
+          credentials?.Password &&
+          bcrypt.compareSync(credentials.Password, user.hashedPassword)
         ) {
           return user;
         } else {
