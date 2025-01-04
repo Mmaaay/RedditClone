@@ -1,34 +1,24 @@
 "use client";
+
 import { FC } from "react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
-import React from "react";
+import CustomCodeRenderer from "@/app/renderers/src/components/renderers/CustomCodeRenderer";
+import CustomImageRenderer from "@/app/renderers/src/components/renderers/CustomImageRenderer";
 
-interface OutPutProps {
-  data: any;
-  style: {
-    paragraph: {
-      fontSize: string;
-      lineHeight: string;
-    };
-  };
-  className: string;
-  renderers: {
-    image: ({ data }: any) => JSX.Element;
-    code: ({ data }: any) => JSX.Element;
-  };
-  children?: React.ReactNode;
-}
-
-const OutPut = dynamic<OutPutProps>(
+const Output = dynamic(
   async () => (await import("editorjs-react-renderer")).default,
   { ssr: false }
 );
 
 interface EditorOutputProps {
   content: any;
-  children?: React.ReactNode;
 }
+
+const renderers = {
+  image: CustomImageRenderer,
+  code: CustomCodeRenderer,
+};
+
 const style = {
   paragraph: {
     fontSize: "0.875rem",
@@ -36,39 +26,15 @@ const style = {
   },
 };
 
-const renderers = {
-  image: customeImageRenderer,
-  code: customCodeRenderer,
-};
-
-const EditorOutput: FC<EditorOutputProps> = ({ content, children }) => {
+const EditorOutput: FC<EditorOutputProps> = ({ content }) => {
   return (
-    <OutPut
-      data={content}
+    <Output
       style={style}
       className="text-sm"
       renderers={renderers}
-    >
-      {children}
-    </OutPut>
+      data={content}
+    />
   );
 };
-
-function customeImageRenderer({ data }: any) {
-  const src = data.file.url;
-  return (
-    <div className="relative w-full min-h-[15rem]">
-      <Image alt="img" className="object-contain" fill src={src} />
-    </div>
-  );
-}
-
-function customCodeRenderer({ data }: any) {
-  return (
-    <pre className="bg-gray-800 p-2 rounded-md text-white">
-      <code className="text-gray-100 text-sm">{data.code}</code>
-    </pre>
-  );
-}
 
 export default EditorOutput;

@@ -7,10 +7,9 @@ import { redis } from "@/lib/redis";
 import { formatTimeToNow } from "@/lib/utils";
 import { CachedPost } from "@/types/redis";
 import { Post, User, Vote } from "@prisma/client";
-import { ArrowBigDown } from "lucide-react";
-import { ArrowBigUp, Loader2 } from "lucide-react";
+import { ArrowBigDown, ArrowBigUp, Loader2 } from "lucide-react";
 import { notFound } from "next/navigation";
-import { FC, Suspense } from "react";
+import { Suspense } from "react";
 
 interface PageProps {
   params: {
@@ -43,7 +42,7 @@ const page = async ({ params }: PageProps) => {
 
   return (
     <div>
-      <div className="h-full flex flex-col sm:flex-row items-center sm:items-start justify-between">
+      <div className="flex sm:flex-row flex-col justify-between items-center sm:items-start h-full">
         <Suspense fallback={<PostVoteShell />}>
           {/* @ts-expect-error server component */}
           <PostVoteServer
@@ -56,19 +55,19 @@ const page = async ({ params }: PageProps) => {
             }}
           />
         </Suspense>
-        <div className="sm:w-0 w-full flex-1 bg-white p-4 rounded-sm">
-          <p className="max-h-40 mt-1 truncate text-xs text-gray-500">
+        <div className="flex-1 bg-white p-4 rounded-sm w-full sm:w-0">
+          <p className="mt-1 max-h-40 text-gray-500 text-xs truncate">
             Posted by u/{post?.author.username ?? cachedPost.autherUserName}{" "}
             {formatTimeToNow(new Date(post?.createdAt ?? cachedPost.createdAt))}
           </p>
-          <h1 className="text-xl font-semibold py-2 leading-6 text-gray-900">
+          <h1 className="py-2 font-semibold text-gray-900 text-xl leading-6">
             {post?.title ?? cachedPost.title}
           </h1>
 
           <EditorOutput content={post?.content ?? cachedPost.content} />
           <Suspense
             fallback={
-              <Loader2 className="h-5 w-5 animate-spin text-zinc-500" />
+              <Loader2 className="w-5 h-5 text-zinc-500 animate-spin" />
             }
           >
             {/* @ts-expect-error server component */}
@@ -82,17 +81,17 @@ const page = async ({ params }: PageProps) => {
 
 function PostVoteShell() {
   return (
-    <div className="flex items-center flex-col pr-6 w-20">
+    <div className="flex flex-col items-center pr-6 w-20">
       <div className={buttonVariants({ variant: "ghost" })}>
-        <ArrowBigUp className="h-5 w-5 text-zinc-700" />
+        <ArrowBigUp className="w-5 h-5 text-zinc-700" />
       </div>
 
-      <div className="text-center py-2 font-medium text-sm text-zinc-900">
-        <Loader2 className="h-3 w-3 animate-spin"></Loader2>
+      <div className="py-2 font-medium text-center text-sm text-zinc-900">
+        <Loader2 className="w-3 h-3 animate-spin"></Loader2>
       </div>
 
       <div className={buttonVariants({ variant: "ghost" })}>
-        <ArrowBigDown className="h-5 w-5 text-zinc-700" />
+        <ArrowBigDown className="w-5 h-5 text-zinc-700" />
       </div>
     </div>
   );
