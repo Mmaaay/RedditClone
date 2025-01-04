@@ -74,9 +74,7 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.0.4",
     "uploadthing": "^6.10.4",
-    "zod": "^3.21.4"
-  },
-  "devDependencies": {
+    "zod": "^3.21.4",
     "@types/editorjs__header": "^2.6.0",
     "@types/lodash.debounce": "^4.0.7"
   }
