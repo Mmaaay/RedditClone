@@ -27,6 +27,7 @@ const OutPut = dynamic<OutPutProps>(
 
 interface EditorOutputProps {
   content: any;
+  children?: React.ReactNode;
 }
 const style = {
   paragraph: {
@@ -40,14 +41,16 @@ const renderers = {
   code: customCodeRenderer,
 };
 
-const EditorOutput: FC<EditorOutputProps> = ({ content }) => {
+const EditorOutput: FC<EditorOutputProps> = ({ content, children }) => {
   return (
     <OutPut
       data={content}
       style={style}
       className="text-sm"
       renderers={renderers}
-    />
+    >
+      {children}
+    </OutPut>
   );
 };
 
