@@ -10,6 +10,7 @@ import { toast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
+import Header from "@editorjs/header";
 interface EditorProps {
   subredditId: string;
 }
@@ -38,7 +39,6 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
 
   const initializeEditor = useCallback(async () => {
     const editorJs = (await import("@editorjs/editorjs")).default;
-    const Header = (await import("@editorjs/Header")).default;
     const Embed = (await import("@editorjs/embed")).default;
     const Table = (await import("@editorjs/table")).default;
     const List = (await import("@editorjs/list")).default;
@@ -48,6 +48,40 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
     const ImageTool = (await import("@editorjs/image")).default;
 
     if (!ref.current) {
+      const tools = {
+        header: Header,
+        LinkTool: {
+          class: LinkTool,
+          config: {
+            endpoint: "/api/link",
+          },
+        },
+        image: {
+          class: ImageTool,
+          config: {
+            uploader: {
+              async uploadByFile(file: File) {
+                const [res] = await uploadFiles("imageUploader", {
+                  files: [file],
+                });
+
+                return {
+                  success: 1,
+                  file: {
+                    url: res.url,
+                  },
+                };
+              },
+            },
+          },
+        },
+        list: List,
+        code: Code,
+        inlineCode: InlineCode,
+        table: Table,
+        embed: Embed,
+      };
+
       const editor = new editorJs({
         holder: "editor",
         onReady() {
@@ -56,39 +90,7 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
         placeholder: "Type here to write your post ...",
         inlineToolbar: true,
         data: { blocks: [] },
-        tools: {
-          header: Header,
-          LinkTool: {
-            class: LinkTool,
-            config: {
-              endpoint: "/api/link",
-            },
-          },
-          image: {
-            class: ImageTool,
-            config: {
-              uploader: {
-                async uploadByFile(file: File) {
-                  const [res] = await uploadFiles("imageUploader", {
-                    files: [file],
-                  });
-
-                  return {
-                    success: 1,
-                    file: {
-                      url: res.url,
-                    },
-                  };
-                },
-              },
-            },
-          },
-          list: List,
-          code: Code,
-          inlineCode: InlineCode,
-          table: Table,
-          embed: Embed,
-        },
+        tools,
       });
     }
   }, []);

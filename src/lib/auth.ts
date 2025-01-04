@@ -5,8 +5,12 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { nanoid } from "nanoid";
 import bcrypt from "bcryptjs";
+import NextAuth from "next-auth";
+import GithubProvider from "next-auth/providers/github";
+import { Prisma } from "@prisma/client";
+
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(Prisma),
   session: {
     strategy: "jwt",
   },
@@ -15,6 +19,10 @@ export const authOptions: NextAuthOptions = {
   },
 
   providers: [
+    GithubProvider({
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
+    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
@@ -37,7 +45,6 @@ export const authOptions: NextAuthOptions = {
         if (!user) {
           return null;
         }
-        console.log(user);
         if (
           user.hashedPassword &&
           credentials?.Password &&
