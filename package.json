@@ -5,15 +5,15 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node_modules/next/dist/bin/next start -p $PORT",
+    "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate"
   },
   "dependencies": {
     "@editorjs/code": "^2.8.0",
-    "@editorjs/editorjs": "^2.27.0",
+    "@editorjs/editorjs": "^2.29.1",
     "@editorjs/embed": "^2.5.3",
-    "@editorjs/header": "^2.7.0",
+    "@editorjs/header": "^2.8.1",
     "@editorjs/image": "^2.8.1",
     "@editorjs/inline-code": "^1.4.0",
     "@editorjs/link": "^2.5.0",

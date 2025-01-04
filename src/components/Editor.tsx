@@ -177,13 +177,13 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
   const { ref: titleref, ...rest } = register("title");
 
   return (
-    <div className="w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200">
+    <div className="border-zinc-200 bg-zinc-50 p-4 border rounded-lg w-full">
       <form
         id="subreddit-post-form"
         className="w-fit"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="prose prose-stone dark:prose-invert">
+        <div className="dark:prose-invert prose prose-stone">
           <TextareaAutosize
             ref={(e) => {
               titleref(e);
@@ -192,7 +192,7 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
             }}
             {...rest}
             placeholder="Title"
-            className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
+            className="bg-transparent w-full font-bold text-5xl overflow-hidden appearance-none focus:outline-none resize-none"
           />
           <div id="editor" className="min-h-[500px]" />
         </div>
