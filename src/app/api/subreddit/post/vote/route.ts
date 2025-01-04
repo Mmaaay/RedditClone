@@ -57,7 +57,7 @@ export async function PATCH(req: Request) {
         },
       });
 
-      const votesAmt = post.votes.reduce((acc, vote) => {
+      const votesAmt = post.votes.reduce((acc: number, vote) => {
         if (vote.type === "UPVOTE") {
           return acc + 1;
         }

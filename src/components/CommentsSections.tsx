@@ -18,10 +18,12 @@ const CommentsSections = async ({ postId }: CommentsSectionsProps) => {
     include: {
       author: true,
       Votes: true,
+      replyTo: true,
       replies: {
         include: {
           author: true,
           Votes: true,
+          replyTo: true,
         },
       },
     },
@@ -29,7 +31,7 @@ const CommentsSections = async ({ postId }: CommentsSectionsProps) => {
 
   return (
     <div className="flex flex-col gap-y-4 mt-4">
-      <hr className="w-full h-px my-6" />
+      <hr className="my-6 w-full h-px" />
       <CreateComment postId={postId} />
       <div className="flex flex-col gap-y-6 mt-4">
         {comments
@@ -79,7 +81,7 @@ const CommentsSections = async ({ postId }: CommentsSectionsProps) => {
                     return (
                       <div
                         key={reply.id}
-                        className="ml-2 py-2 pl-4 bl-4 b-zinc-200"
+                        className="ml-2 py-2 pl-4 b-zinc-200 bl-4"
                       >
                         <PostComment
                           postId={postId}

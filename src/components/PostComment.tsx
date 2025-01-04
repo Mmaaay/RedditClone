@@ -18,7 +18,7 @@ import Useravatar from "./Useravatar";
 import { toast } from "@/hooks/use-toast";
 
 type ExtendedComment = Comment & {
-  votes: CommentVote[];
+  Votes: CommentVote[];
   author: User;
   replyTo: Comment | null;
 };
@@ -76,22 +76,22 @@ const PostComment: FC<PostCommentProps> = ({
             name: comment.author.name || null,
             image: comment.author.image || null,
           }}
-          className="h-6 w-6"
+          className="w-6 h-6"
         />
-        <div className="ml-2 flex items-center gap-x-2">
-          <p className="text-sm font-medium text-gray-900">
+        <div className="flex items-center gap-x-2 ml-2">
+          <p className="font-medium text-gray-900 text-sm">
             u/{comment.author.username}
           </p>
 
-          <p className="max-h-40 truncate text-xs text-zinc-500">
+          <p className="max-h-40 text-xs text-zinc-500 truncate">
             {formatTimeToNow(new Date(comment.CreatedAt))}
           </p>
         </div>
       </div>
 
-      <p className="text-sm text-zinc-900 mt-2">{comment.text}</p>
+      <p className="mt-2 text-sm text-zinc-900">{comment.text}</p>
 
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <CommentVotes
           commentId={comment.id}
           initialVotesAmount={votesAmt}
@@ -106,13 +106,13 @@ const PostComment: FC<PostCommentProps> = ({
           variant="ghost"
           size="xs"
         >
-          <MessageSquare className="h-4 w-4 mr-1.5" />
+          <MessageSquare className="mr-1.5 w-4 h-4" />
           Reply
         </Button>
       </div>
 
       {isReplying ? (
-        <div className="grid w-full gap-1.5">
+        <div className="gap-1.5 grid w-full">
           <Label htmlFor="comment">Your comment</Label>
           <div className="mt-2">
             <Textarea
@@ -130,7 +130,7 @@ const PostComment: FC<PostCommentProps> = ({
               placeholder="What are your thoughts?"
             />
 
-            <div className="mt-2 flex justify-end gap-2">
+            <div className="flex justify-end gap-2 mt-2">
               <Button
                 tabIndex={-1}
                 variant="subtle"

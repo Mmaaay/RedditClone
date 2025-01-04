@@ -1,16 +1,17 @@
-import { NextAuthOptions, getServerSession } from "next-auth";
-import { db } from "./db";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { nanoid } from "nanoid";
 import bcrypt from "bcryptjs";
-import NextAuth from "next-auth";
+import { nanoid } from "nanoid";
+import { NextAuthOptions, getServerSession } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
-import { Prisma } from "@prisma/client";
+import GoogleProvider from "next-auth/providers/google";
+import { db } from "./db";
+import { PrismaClient } from "@prisma/client";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+
+const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(Prisma),
+  adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
   },

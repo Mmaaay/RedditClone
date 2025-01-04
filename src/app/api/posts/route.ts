@@ -19,8 +19,14 @@ export async function GET(req: Request, res: Response) {
       },
     });
 
+    if (!followedCommunitites) {
+      return new Response("No followed communities", { status: 404 });
+    }
+
     followedCommunititesIds = followedCommunitites.map(
-      ({ subreddit }: { subreddit: { id: string } }) => subreddit.id
+      //@ts-expect-error
+
+      ({ subreddit }) => subreddit.id
     );
   }
 
