@@ -1,15 +1,15 @@
 "use client";
-import { toast } from "@/hooks/use-toast";
-import { uploadFiles } from "@/lib/uploadthing";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
+import TextareaAutosize from "react-textarea-autosize";
+import { useForm } from "react-hook-form";
 import { postCreationValidator, postValidator } from "@/lib/validators/post";
-import type EditorJS from "@editorjs/editorjs";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type EditorJS from "@editorjs/editorjs";
+import { uploadFiles } from "@/lib/uploadthing";
+import { toast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import TextareaAutosize from "react-textarea-autosize";
 interface EditorProps {
   subredditId: string;
 }
@@ -177,13 +177,13 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
   const { ref: titleref, ...rest } = register("title");
 
   return (
-    <div className="border-zinc-200 bg-zinc-50 p-4 border rounded-lg w-full">
+    <div className="w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200">
       <form
         id="subreddit-post-form"
         className="w-fit"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="dark:prose-invert prose prose-stone">
+        <div className="prose prose-stone dark:prose-invert">
           <TextareaAutosize
             ref={(e) => {
               titleref(e);
@@ -192,7 +192,7 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
             }}
             {...rest}
             placeholder="Title"
-            className="bg-transparent w-full font-bold text-5xl overflow-hidden appearance-none focus:outline-none resize-none"
+            className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
           />
           <div id="editor" className="min-h-[500px]" />
         </div>
