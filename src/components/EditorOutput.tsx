@@ -1,9 +1,19 @@
 "use client";
+import { FC } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { FC } from "react";
 
-const OutPut = dynamic(
+interface OutPutProps {
+  data: any;
+  style: typeof style;
+  className: string;
+  renderers: {
+    image: ({ data }: any) => JSX.Element;
+    code: ({ data }: any) => JSX.Element;
+  };
+}
+
+const OutPut = dynamic<OutPutProps>(
   async () => (await import("editorjs-react-renderer")).default,
   { ssr: false }
 );
@@ -11,7 +21,6 @@ const OutPut = dynamic(
 interface EditorOutputProps {
   content: any;
 }
-
 const style = {
   paragraph: {
     fontSize: "0.875rem",
@@ -46,7 +55,7 @@ function customeImageRenderer({ data }: any) {
 
 function customCodeRenderer({ data }: any) {
   return (
-    <pre className="bg-gray-800 text-white p-2 rounded-md">
+    <pre className="bg-gray-800 p-2 rounded-md text-white">
       <code className="text-gray-100 text-sm">{data.code}</code>
     </pre>
   );
