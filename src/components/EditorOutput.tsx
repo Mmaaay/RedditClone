@@ -17,6 +17,7 @@ interface OutPutProps {
     image: ({ data }: any) => JSX.Element;
     code: ({ data }: any) => JSX.Element;
   };
+  children?: React.ReactNode;
 }
 
 const OutPut = dynamic<OutPutProps>(
