@@ -18,10 +18,15 @@ export async function GET(req: Request, res: Response) {
         subreddit: true,
       },
     });
+    if (!followedCommunitites) {
+      return new Response("Could not show more feed, please try again later", {
+        status: 500,
+      });
+    }
 
-    followedCommunititesIds = followedCommunitites.map(
-      ({ subreddit }) => subreddit.id
-    );
+    followedCommunititesIds = followedCommunitites
+      .filter(({ subreddit }) => subreddit !== null)
+      .map(({ subreddit }) => subreddit!.id);
   }
 
   try {
