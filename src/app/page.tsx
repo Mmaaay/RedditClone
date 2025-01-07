@@ -14,7 +14,7 @@ export default async function Home() {
         {/* @ts-expect-error server component*/}
         {session ? <CustomFeed /> : <GeneralFeed />}
         {/* subbreddit info */}
-        <div className="border-gray-200 order-first md:order-last border rounded-lg h-fit overflow-hiddem">
+        <div className="border-gray-200 order-first md:order-last border rounded-lg h-fit overflow-hidden">
           <div className="bg-emerald-100 px-6 py-4">
             <p className="flex items-center gap-1.5 py-3 font-semibold">
               <HomeIcon className="w-4 h-4" />
@@ -36,19 +36,18 @@ export default async function Home() {
                 Create Community
               </Link>
             ) : (
-              <div> </div>
+              <div className="mt-4">
+                <p className="mb-2 text-blue-600 text-center">
+                  Log in to start your adventure.
+                </p>
+                <Link
+                  className={buttonVariants({ className: "w-full" })}
+                  href="/login"
+                >
+                  Log In
+                </Link>
+              </div>
             )}
-            <div className="mt-4">
-              <p className="mb-2 text-blue-600 text-center">
-                Log in to start your adventure.
-              </p>
-              <Link
-                className={buttonVariants({ className: "w-full" })}
-                href="/login"
-              >
-                Log In
-              </Link>
-            </div>
           </div>
         </div>
       </div>

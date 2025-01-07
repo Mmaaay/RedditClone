@@ -1,11 +1,13 @@
+import Link from "next/link";
+import { format } from "date-fns";
+import { notFound } from "next/navigation";
+
+import SubscripeLeaveToggle from "@/components/SubscripeLeaveToggle";
 import { Button, buttonVariants } from "@/components/ui/Button";
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from "@/config";
-import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { notFound } from "next/navigation";
-import { format } from "date-fns";
-import SubscripeLeaveToggle from "@/components/SubscripeLeaveToggle";
-import Link from "next/link";
+import { getAuthSession } from "@/lib/auth";
+
 const Layout = async ({
   children,
   params: { slug },

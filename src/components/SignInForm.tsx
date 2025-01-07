@@ -7,14 +7,11 @@ import { toast } from "@/hooks/use-toast";
 import { SignInType, SignInValidator } from "@/lib/validators/account";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const SignInForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const router = useRouter();
 
   const {
     register,
